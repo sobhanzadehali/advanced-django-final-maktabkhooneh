@@ -21,7 +21,7 @@ class Post(models.Model):
     title = models.CharField(max_length=50)
     slug = models.SlugField()
     category = models.ManyToManyField("blog.Category", related_name="cat_post")
-    banner = models.ImageField()
+    banner = models.ImageField(blank=True, null=True)
     body = models.TextField()
     status = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)

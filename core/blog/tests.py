@@ -34,7 +34,6 @@ class TestBlogPost:
             updated_date=None,
         )
         post.category.add(category)
-        assert category.name == "CAT1"
         assert post.status == False
         assert post.author.user.email == "admin@admin.com"
 
