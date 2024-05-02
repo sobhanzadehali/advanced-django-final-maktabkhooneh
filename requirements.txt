@@ -1,0 +1,38 @@
+# django
+django>4,<5
+djangorestframework
+pillow
+markdown
+django-filter
+django-cors-headers
+
+# doc
+drf-yasg
+
+drf-spectacular
+
+#auth
+djoser
+djangorestframework_simplejwt
+
+# bg processes
+celery
+redis
+
+# db
+psycopg2-binary
+faker
+
+# test
+pytest
+pytest-django
+
+# deploy
+gunicorn
+python-decouple
+
+# lint and format
+black
+flake8
+
+
