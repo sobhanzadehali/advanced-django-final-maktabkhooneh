@@ -37,11 +37,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "accounts",
-    "blog",
-    "comment",
+    "accounts.apps.AccountsConfig",
+    "blog.apps.BlogConfig",
+    "comment.apps.CommentConfig",
 ]
 
+# User Model
+AUTH_USER_MODEL = "accounts.CustomUser"
+
+# middlewares
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
