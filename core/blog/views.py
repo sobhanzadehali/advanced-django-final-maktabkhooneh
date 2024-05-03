@@ -1,6 +1,7 @@
 from typing import Any
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.forms import BaseModelForm
 from django.http import HttpRequest, HttpResponse
 from django.views.generic import (
@@ -43,10 +44,12 @@ class PostDetailView(DetailView):
         return super().get_queryset().filter(status=True)
 
 
-class PostCreateview(CreateView):
+class PostCreateview(CreateView,PermissionRequiredMixin):
     model = Post
+    permission_required = 'blog.add_post'
     fields = ("title", "slug", "banner", "body", "category")
     template_name = "blog/post_create.html"
+    
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         self.object = form.save(commit=False)
