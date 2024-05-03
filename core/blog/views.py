@@ -55,3 +55,14 @@ class PostCreateview(CreateView,PermissionRequiredMixin):
         self.object = form.save(commit=False)
         self.object.author = Profile.objects.create(user=self.request.user)
         return super().form_valid(form)
+
+class PostUpdateView(UpdateView, PermissionRequiredMixin):
+    model = Post
+    template_name = 'blog/post_update.html'
+    permission_required = 'blog.change_post'
+    permission_denied_message = ' you dont have the permission to edit a post in blog'
+    fields = ('title', 'slug', 'banner', 'body',)
+    def get_queryset(self):
+        query = super().get_queryset()
+        return query.filter(author__user=self.request.user)
+

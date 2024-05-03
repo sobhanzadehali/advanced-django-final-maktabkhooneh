@@ -13,6 +13,12 @@
 <p> {{post.created_date}} </p>
 <img src="{{post.banner}}" alt="image does not loaded!!">
 <p> {{post.body}} </p>
+
+{% if post.author.user == request.user %}
+<a href="{% url 'blog:post_update' slug=post.slug pk=post.id%}">Edit!</a>
+   
+{% endif %}
+   
     
 {% endblock content %}
     
