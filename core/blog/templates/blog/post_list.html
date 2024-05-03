@@ -14,6 +14,7 @@ post list
     {% for post in post_list %}
        <a href="{{post.get_absolute_url}}">{{post.title}}</a>
        <p>{{post.author}}</p>
+       <img src="{{post.banner}}" alt="image does not loaded!!!">
        <p>{{post.created_date}}</p>
        <p>{{post.banner}}</p>
        <p>{{post.body}}</p>
