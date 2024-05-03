@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+post list 
+    
+{% endblock title %}
+    
+
+
+{% block content %}
+
+    
+    {% for post in post_list %}
+       <a href="{{post.get_absolute_url}}">{{post.title}}</a>
+       <p>{{post.author}}</p>
+       <p>{{post.created_date}}</p>
+       <p>{{post.banner}}</p>
+       <p>{{post.body}}</p>
+
+    {% endfor %}
+        
+    
+{% endblock content %}
+    

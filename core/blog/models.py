@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.db import models
 
 # Create your models here.
@@ -19,7 +20,7 @@ class Post(models.Model):
         "accounts.Profile", on_delete=models.CASCADE, related_name="post"
     )
     title = models.CharField(max_length=50)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     category = models.ManyToManyField("blog.Category", related_name="cat_post")
     banner = models.ImageField(blank=True, null=True)
     body = models.TextField()
@@ -28,5 +29,8 @@ class Post(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
     published_date = models.DateTimeField(blank=True, null=True)
 
+
+    def get_absolute_url(self):
+        return reverse('blog:post_detail', kwargs={"pk":self.id, "slug":self.slug})
     def __str__(self):
         return self.title
