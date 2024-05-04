@@ -1,3 +1,5 @@
+from django.shortcuts import render
+from django.urls import reverse_lazy
 from typing import Any
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
@@ -17,6 +19,8 @@ from accounts.models.profile import Profile
 
 # Create your views here.
 
+def index(request):
+    return render(request, "index.html")
 
 class PostListView(ListView):
     """
@@ -67,3 +71,15 @@ class PostUpdateView(UpdateView, PermissionRequiredMixin):
         query = super().get_queryset()
         return query.filter(author__user=self.request.user)
 
+
+class PostDeleteView(DeleteView, PermissionRequiredMixin):
+    model = Post
+    template_name = 'blog/post_delete.html'
+    permission_required = 'blog.delete_post'
+    permission_denied_message = ' you dont have the permission to delete this post'
+    success_url = reverse_lazy('blog:post_list')
+    context_object_name = "post"
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        return query.filter(author__user=self.request.user)

@@ -16,6 +16,7 @@
 
 {% if post.author.user == request.user %}
 <a href="{% url 'blog:post_update' slug=post.slug pk=post.id %}">Edit!</a>
+<a href="{% url 'blog:post_delete' slug=post.slug pk=post.id %}">delete!</a>
    
 {% endif %}
    
