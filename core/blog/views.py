@@ -48,7 +48,6 @@ class PostDetailView(DetailView):
     def get_queryset(self) -> QuerySet[Any]:
         return super().get_queryset().filter(status=True)
 
-
 class PostCreateview(CreateView,PermissionRequiredMixin):
     model = Post
     permission_required = 'blog.add_post'

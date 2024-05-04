@@ -1,7 +1,21 @@
 from django import forms
-from accounts.models.user import SubUser
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from accounts.models.user import SubUser, CustomUser
 
 class SubForm(forms.ModelForm):
     class Meta:
         model = SubUser
         fields = ('email',)
+
+
+class CustomUserCreationForm(UserCreationForm):
+
+    class Meta:
+        model = CustomUser
+        fields = ("email",)
+
+class CustomUserChangeForm(UserChangeForm):
+
+    class Meta:
+        model = CustomUser
+        fields = ("email",)
