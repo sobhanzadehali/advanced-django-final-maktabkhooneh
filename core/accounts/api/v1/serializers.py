@@ -14,7 +14,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    image = serializers.ImageField()
+    user = serializers.SlugRelatedField(read_only=True, slug_field='email')
+    image = serializers.ImageField(required=False)
     class Meta:
         model = Profile
         fields = (
@@ -25,3 +26,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             "image",
             "description",
         )
+    def create(self, validated_data):
+        validated_data['user'] = self.context.get('request').user
+        return super().create(validated_data)

@@ -1,6 +1,6 @@
-from rest_framework.generics import RetrieveUpdateAPIView,ListAPIView
-from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAdminUser
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from .serializers import ProfileSerializer,CustomUserSerializer
 from accounts.models.profile import Profile
@@ -9,15 +9,12 @@ from .permissions import IsOwnerOrReadOnly
 
 
 
-class ProfileListAPIView(ListAPIView):
+class ProfileViewSet(ModelViewSet):
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly,]
     queryset = Profile.objects.all()
-
-class ProfileRetrieveAPIView(RetrieveUpdateAPIView):
-    serializer_class = ProfileSerializer
-    permission_classes = [IsOwnerOrReadOnly,]
-    queryset = Profile.objects.all()
+    parser_classes = [MultiPartParser, FormParser,]
+    http_method_names = ('get','post', 'put', 'patch', 'head')
 
 
 class UserAdminViewSet(ModelViewSet):
