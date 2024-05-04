@@ -48,4 +48,5 @@ urlpatterns = [
     # apps
     path('accounts/',include('accounts.urls')),
     path('blog/',include('blog.urls')),
+    path('comment/', include('comment.urls'))
 ]
