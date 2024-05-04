@@ -37,9 +37,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "drf_yasg",
     "accounts.apps.AccountsConfig",
     "blog.apps.BlogConfig",
     "comment.apps.CommentConfig",
+    "rest_framework",
 ]
 
 # User Model
@@ -122,9 +124,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static',]
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -133,5 +137,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # login
-LOGIN_REDIRECT_URL = "/blog/" 
-LOGOUT_REDIRECT_URL = "/blog/" 
+LOGIN_REDIRECT_URL = "/blog/"
+LOGOUT_REDIRECT_URL = "/blog/"
