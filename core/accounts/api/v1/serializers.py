@@ -1,4 +1,6 @@
+from typing import Any, Dict
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from accounts.models.profile import Profile
 from accounts.models.user import CustomUser

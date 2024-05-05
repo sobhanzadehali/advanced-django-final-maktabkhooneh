@@ -1,8 +1,9 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework_simplejwt.views import TokenObtainPairView
 
-from .serializers import ProfileSerializer,CustomUserSerializer
+from .serializers import ProfileSerializer,CustomUserSerializer, CustomTokenObtainPairSerializer
 from accounts.models.profile import Profile
 from accounts.models.user import CustomUser
 from .permissions import IsOwnerOrReadOnly
@@ -22,4 +23,6 @@ class UserAdminViewSet(ModelViewSet):
     permission_classes = [IsAdminUser,]
     queryset = CustomUser.objects.all()
     
-    
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "blog.apps.BlogConfig",
     "comment.apps.CommentConfig",
     "rest_framework",
+    'rest_framework_simplejwt',
 ]
 
 # User Model
@@ -139,3 +140,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # login
 LOGIN_REDIRECT_URL = "/blog/"
 LOGOUT_REDIRECT_URL = "/blog/"
+
+# REST settings
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    )
+}
