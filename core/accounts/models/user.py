@@ -25,6 +25,8 @@ class CustomUserManager(BaseUserManager):
         kwargs.setdefault("is_active", True)
         kwargs.setdefault("is_staff", True)
         kwargs.setdefault("is_superuser", True)
+        kwargs.setdefault("is_verified", True)
+
         if kwargs.get("is_staff") is not True:
             raise ValueError("Superuser must have is_staff=True.")
         if kwargs.get("is_superuser") is not True:
@@ -37,7 +39,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    # is_verified = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
@@ -59,6 +61,7 @@ class SubUser(models.Model):
 
     def __str__(self):
         return self.email
+
 
 @receiver(post_save, sender=CustomUser)
 def create_sub(sender, instance, created, **kwargs):

@@ -12,4 +12,3 @@ class PostForm(forms.ModelForm):
             "banner",
             "body",
         )
-    

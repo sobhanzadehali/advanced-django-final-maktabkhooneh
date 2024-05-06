@@ -19,8 +19,10 @@ from accounts.models.profile import Profile
 
 # Create your views here.
 
+
 def index(request):
     return render(request, "index.html")
+
 
 class PostListView(ListView):
     """
@@ -48,24 +50,31 @@ class PostDetailView(DetailView):
     def get_queryset(self) -> QuerySet[Any]:
         return super().get_queryset().filter(status=True)
 
-class PostCreateview(CreateView,PermissionRequiredMixin):
+
+class PostCreateview(CreateView, PermissionRequiredMixin):
     model = Post
-    permission_required = 'blog.add_post'
+    permission_required = "blog.add_post"
     fields = ("title", "slug", "banner", "body", "category")
     template_name = "blog/post_create.html"
-    
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         self.object = form.save(commit=False)
         self.object.author = Profile.objects.create(user=self.request.user)
         return super().form_valid(form)
 
+
 class PostUpdateView(UpdateView, PermissionRequiredMixin):
     model = Post
-    template_name = 'blog/post_update.html'
-    permission_required = 'blog.change_post'
-    permission_denied_message = ' you dont have the permission to edit a post in blog'
-    fields = ('title', 'slug', 'banner', 'body',)
+    template_name = "blog/post_update.html"
+    permission_required = "blog.change_post"
+    permission_denied_message = " you dont have the permission to edit a post in blog"
+    fields = (
+        "title",
+        "slug",
+        "banner",
+        "body",
+    )
+
     def get_queryset(self):
         query = super().get_queryset()
         return query.filter(author__user=self.request.user)
@@ -73,10 +82,10 @@ class PostUpdateView(UpdateView, PermissionRequiredMixin):
 
 class PostDeleteView(DeleteView, PermissionRequiredMixin):
     model = Post
-    template_name = 'blog/post_delete.html'
-    permission_required = 'blog.delete_post'
-    permission_denied_message = ' you dont have the permission to delete this post'
-    success_url = reverse_lazy('blog:post_list')
+    template_name = "blog/post_delete.html"
+    permission_required = "blog.delete_post"
+    permission_denied_message = " you dont have the permission to delete this post"
+    success_url = reverse_lazy("blog:post_list")
     context_object_name = "post"
 
     def get_queryset(self):

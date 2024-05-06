@@ -8,8 +8,8 @@ class Category(models.Model):
     name = models.CharField(max_length=250)
 
     class Meta:
-        verbose_name = 'category'
-        verbose_name_plural = 'categories'
+        verbose_name = "category"
+        verbose_name_plural = "categories"
 
     def __str__(self):
         return self.name
@@ -29,8 +29,8 @@ class Post(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
     published_date = models.DateTimeField(blank=True, null=True)
 
-
     def get_absolute_url(self):
-        return reverse('blog:post_detail', kwargs={"pk":self.id, "slug":self.slug})
+        return reverse("blog:post_detail", kwargs={"pk": self.id, "slug": self.slug})
+
     def __str__(self):
         return self.title
