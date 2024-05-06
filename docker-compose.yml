@@ -1,6 +1,13 @@
 version: '3.4'
 
 services:
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: redis-server --save 60 1 --loglevel warning
+
   backend:
     container_name: backend
     build: .
@@ -10,3 +17,23 @@ services:
 
     ports:
       - "8000:8000"
+    depends_on:
+      - redis
+  worker:
+    build: .
+    command: celery -A core worker --loglevel=info
+    volumes:
+      - ./core:/app
+    depends_on:
+      - redis
+      - backend
+  
+  celery-beat:
+    build: .
+    container_name: beat
+    command: celery -A core beat -l info
+    volumes:
+      - ./core:/app
+    depends_on:
+      - redis
+      - backend
