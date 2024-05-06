@@ -24,5 +24,5 @@ from accounts.tasks import delete_abandon_users
 
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    sender.add_periodic_task(5.0, delete_abandon_users.s(), name='removes users every 24h')
+    sender.add_periodic_task(86400.0, delete_abandon_users.s(), name='removes users every 24h')
 
