@@ -8,8 +8,6 @@ from accounts.models.profile import Profile
 from accounts.models.user import CustomUser
 
 
-
-
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
@@ -20,8 +18,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    user = serializers.SlugRelatedField(read_only=True, slug_field='email')
+    user = serializers.SlugRelatedField(read_only=True, slug_field="email")
     image = serializers.ImageField(required=False)
+
     class Meta:
         model = Profile
         fields = (
@@ -32,17 +31,20 @@ class ProfileSerializer(serializers.ModelSerializer):
             "image",
             "description",
         )
+
     def create(self, validated_data):
-        validated_data['user'] = self.context.get('request').user
+        validated_data["user"] = self.context.get("request").user
         return super().create(validated_data)
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    
+
     def validate(self, attrs: Dict[str, Any]) -> Dict[str, str]:
         valid_data = super().validate(attrs)
-        valid_data['email'] = self.user.email
-        valid_data['user_id'] = self.user.id
+        if not self.user.is_verified:
+            raise serializers.ValidationError({"detail": "user is not verified"})
+        valid_data["email"] = self.user.email
+        valid_data["user_id"] = self.user.id
         return valid_data
 
 
@@ -52,14 +54,12 @@ class ChangePasswordSerializer(serializers.Serializer):
     new_password1 = serializers.CharField(required=True)
 
     def validate(self, attrs):
-        if attrs.get('new_password') != attrs.get('new_password1'):
-            raise serializers.ValidationError(
-                'passwords does not match'
-            )
+        if not self.user.is_verified:
+            raise serializers.ValidationError({"detail": "user is not verified"})
+        if attrs.get("new_password") != attrs.get("new_password1"):
+            raise serializers.ValidationError("passwords does not match")
         try:
-            validate_password(attrs.get('new_password'))
+            validate_password(attrs.get("new_password"))
         except exceptions.ValidationError as e:
-            raise serializers.ValidationError(
-                {'password': list(e.messages)}
-            )
+            raise serializers.ValidationError({"password": list(e.messages)})
         return super().validate(attrs)

@@ -5,11 +5,12 @@ from .permissions import IsOwnerOrReadOnly
 from comment.models import Comment
 
 
-
-
 class CommentViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsOwnerOrReadOnly,]
+    permission_classes = [
+        IsOwnerOrReadOnly,
+    ]
     serializer_class = CommentSerializer
     model = Comment
+
     def get_queryset(self):
         return self.model.objects.all()

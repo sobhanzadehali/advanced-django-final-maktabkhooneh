@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,7 +43,7 @@ INSTALLED_APPS = [
     "blog.apps.BlogConfig",
     "comment.apps.CommentConfig",
     "rest_framework",
-    'rest_framework_simplejwt',
+    "rest_framework_simplejwt",
 ]
 
 # User Model
@@ -143,7 +144,26 @@ LOGOUT_REDIRECT_URL = "/blog/"
 
 # REST settings
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    )
+    # "DEFAULT_AUTHENTICATION_CLASSES": (
+    #     "rest_framework_simplejwt.authentication.JWTAuthentication",
+    # ),
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.ScopedRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "email": "20/day",
+        # 'uploads': '50/day'
+    },
 }
+
+# simple JWT custom settings
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=45),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "UPDATE_LAST_LOGIN": True,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+}
+# email conf
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

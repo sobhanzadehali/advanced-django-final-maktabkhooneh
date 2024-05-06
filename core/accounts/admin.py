@@ -8,10 +8,15 @@ from .models.profile import Profile
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    list_display = ('email', 'is_staff','is_active',)
-    list_filter = ('is_staff', 'is_active')
+    list_display = (
+        "email",
+        "is_staff",
+        "is_active",
+        "is_verified",
+    )
+    list_filter = ("is_staff", "is_active")
     searching_fields = ("email",)
-    ordering = ('email',)
+    ordering = ("email",)
     fieldsets = (
         (
             "Authentication",
@@ -26,13 +31,14 @@ class CustomUserAdmin(UserAdmin):
                     "is_staff",
                     "is_active",
                     "is_superuser",
+                    "is_verified",
                 ),
             },
         ),
         (
             "group permissions",
             {
-                "classes":("collapse",),
+                "classes": ("collapse",),
                 "fields": ("groups", "user_permissions"),
             },
         ),
@@ -55,10 +61,12 @@ class CustomUserAdmin(UserAdmin):
                     "is_staff",
                     "is_active",
                     "is_superuser",
+                    "is_verified",
                 ),
             },
         ),
     )
+
 
 admin.site.register(Profile)
 admin.site.register(CustomUser, CustomUserAdmin)

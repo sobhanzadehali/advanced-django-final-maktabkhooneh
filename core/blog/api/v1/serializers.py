@@ -8,11 +8,15 @@ from comment.api.v1.serializers import CommentSerializer
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(many=False, read_only=True, slug_field="user__email")
-    category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all(), many=True)
+    author = serializers.SlugRelatedField(
+        many=False, read_only=True, slug_field="user__email"
+    )
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all(), many=True
+    )
     banner = serializers.ImageField(required=False)
     status = serializers.ReadOnlyField()
-    comment = CommentSerializer(many=True,required=False)
+    comment = CommentSerializer(many=True, required=False)
 
     class Meta:
         model = Post
@@ -32,7 +36,8 @@ class PostSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data["author"] = Profile.objects.get(
-            user=self.context.get("request").user.id)
+            user=self.context.get("request").user.id
+        )
         return super().create(validated_data)
 
     def update(self, instance, validated_data):
