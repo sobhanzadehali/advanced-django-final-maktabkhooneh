@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "comment.apps.CommentConfig",
     "rest_framework",
     "rest_framework_simplejwt",
+    "corsheaders",
 ]
 
 # User Model
@@ -58,6 +59,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -167,3 +170,10 @@ SIMPLE_JWT = {
 # email conf
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+
+# CORS 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
