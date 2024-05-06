@@ -1,14 +1,11 @@
 import os
 
-
 from celery import Celery
-import django
 
-
-
-django.setup()
 # Set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
+import django
+django.setup()
 
 app = Celery('core')
 
@@ -27,6 +24,5 @@ from accounts.tasks import delete_abandon_users
 
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    time_interval = 60 * 60 * 24
-    sender.add_periodic_task(time_interval, delete_abandon_users.s(), name='removes users every 24h')
+    sender.add_periodic_task(5.0, delete_abandon_users.s(), name='removes users every 24h')
 

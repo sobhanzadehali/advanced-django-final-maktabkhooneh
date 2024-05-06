@@ -18,6 +18,7 @@ djangorestframework_simplejwt
 # bg processes
 celery
 redis
+django-redis
 
 # db
 psycopg2-binary
