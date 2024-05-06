@@ -3,7 +3,6 @@ from datetime import datetime
 
 from blog.models import Post, Category
 from accounts.models.profile import Profile
-from accounts.api.v1.serializers import ProfileSerializer
 from comment.api.v1.serializers import CommentSerializer
 
 

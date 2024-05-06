@@ -15,7 +15,7 @@ accounts:
  - profile
  - templated base auth
  - api base auth (JWT)
- - profile verification with email
+ - profile verification with email(consist of throttling rules)
 
 ---
 ```
