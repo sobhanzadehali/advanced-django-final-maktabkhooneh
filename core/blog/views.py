@@ -13,10 +13,12 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+from django.views.generic.edit import FormMixin
 from .models import Post
 from .forms import PostForm
 from accounts.models.profile import Profile
 from accounts.forms import SubForm
+from comment.forms import CommentForm
 
 # Create your views here.
 
@@ -64,7 +66,7 @@ class PostCreateview(CreateView, PermissionRequiredMixin):
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         self.object = form.save(commit=False)
-        self.object.author = Profile.objects.create(user=self.request.user)
+        self.object.author = Profile.objects.get(user=self.request.user)
         return super().form_valid(form)
 
 
