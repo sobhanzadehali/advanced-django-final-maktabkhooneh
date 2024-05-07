@@ -49,7 +49,9 @@ INSTALLED_APPS = [
     "comment.apps.CommentConfig",
     "rest_framework",
     "rest_framework_simplejwt",
+    "rest_framework.authtoken",
     "corsheaders",
+    "django_filters",
 ]
 
 # User Model

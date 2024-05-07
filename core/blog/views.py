@@ -6,6 +6,7 @@ from django.db.models.query import QuerySet
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.forms import BaseModelForm
 from django.http import HttpRequest, HttpResponse
+from django.views import View
 from django.views.generic import (
     ListView,
     DetailView,
@@ -19,6 +20,7 @@ from .forms import PostForm
 from accounts.models.profile import Profile
 from accounts.forms import SubForm
 from comment.forms import CommentForm
+from comment.views import CommentFormView
 
 # Create your views here.
 
@@ -56,6 +58,30 @@ class PostDetailView(DetailView):
 
     def get_queryset(self) -> QuerySet[Any]:
         return super().get_queryset().filter(status=True)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentForm()
+        return context
+
+class PostView(View):
+
+    def get(self, request, *args, **kwargs):
+        view = PostDetailView.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = CommentFormView.as_view()
+        form = CommentForm(request.POST)
+        # Set the current user
+        # to the comment_author field
+        form.instance.author = Profile.objects.get(user=request.user)
+        # Set the blog post as the current blogpost
+        form.instance.post = Post.objects.get(id=self.kwargs['pk'])
+        if form.is_valid():
+            form.save()
+        return view(request, *args, **kwargs)
+
 
 
 class PostCreateview(CreateView, PermissionRequiredMixin):

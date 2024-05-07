@@ -22,7 +22,7 @@ services:
       - "8000"
     environment:
       - SECRET_KEY=test
-      - DEBUG=False
+      - DEBUG=True
       - SQL_ENGINE=django.db.backends.postgresql
       - SQL_DATABASE=hello_django_dev
       - SQL_USER=hello_django
