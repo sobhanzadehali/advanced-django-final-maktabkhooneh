@@ -25,6 +25,8 @@ routers
 custom permissions
 redis, celery, cached view, scheduled task
 ci/cd github workflow
+github action workflow for CI and CD
+drf-yasg for api documentation ...
 
 ```
 [localhost:8000/swagger/](localhost:8000/swagger/)
