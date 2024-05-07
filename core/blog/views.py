@@ -78,6 +78,7 @@ class PostView(View):
         form.instance.author = Profile.objects.get(user=request.user)
         # Set the blog post as the current blogpost
         form.instance.post = Post.objects.get(id=self.kwargs['pk'])
+        form.instance.status = False
         if form.is_valid():
             form.save()
         return view(request, *args, **kwargs)
