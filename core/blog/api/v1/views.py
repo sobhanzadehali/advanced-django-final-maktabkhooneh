@@ -1,5 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.parsers import MultiPartParser, FormParser
+from django_filters.rest_framework import DjangoFilterBackend
 
 from blog.models import Post
 from .serializers import PostSerializer
@@ -16,6 +17,8 @@ class PostViewSet(ModelViewSet):
         MultiPartParser,
         FormParser,
     ]
+    filter_backends = [DjangoFilterBackend,]
+    filterset_fields = ['category', 'author']
 
     def get_queryset(self):
         posts = Post.objects.filter(status=True)

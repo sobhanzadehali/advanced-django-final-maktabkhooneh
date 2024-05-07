@@ -137,3 +137,11 @@ class UserVerificationView(APIView):
             {"detail": "user account verification completed"},
             status=status.HTTP_202_ACCEPTED,
         )
+
+
+class CustomDiscardAuthToken(APIView):
+    permission_classes = [IsAuthenticated,]
+
+    def post(self, request):
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
