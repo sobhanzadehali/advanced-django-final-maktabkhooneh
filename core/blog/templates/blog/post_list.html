@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 
 
@@ -8,9 +8,7 @@ post list
     
 {% endblock title %}
     
-
-
-{% block content %} 
+{% block content %}
     {% for post in post_list %}
     <div class="single-recent-blog-post">
         <div class="thumb">
@@ -60,7 +58,7 @@ post list
             </nav>
         </div>
       </div>
-    </div>
+    </div> 
     <!-- end of blog post pagination -->
 {% endblock content %}
     

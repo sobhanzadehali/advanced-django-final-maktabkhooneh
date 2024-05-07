@@ -17,6 +17,17 @@
 {% if post.author.user == request.user %}
 <a href="{% url 'blog:post_update' slug=post.slug pk=post.id %}">Edit!</a>
 <a href="{% url 'blog:post_delete' slug=post.slug pk=post.id %}">delete!</a>
+
+<p> Comments:</p>
+<p> ___________________________________</p>
+
+{% for comment in post.comment.all %}
+<p> {{comment.author}} </p>   
+
+<p> {{comment.body}} </p>   
+<p> ---------------------------------------------------------------</p>
+
+{% endfor %}
    
 {% endif %}
    
