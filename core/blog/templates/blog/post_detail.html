@@ -22,10 +22,15 @@
 <p> ___________________________________</p>
 
 {% for comment in post.comment.all %}
+
+{% if comment.status == True %}
 <p> {{comment.author}} </p>   
 
 <p> {{comment.body}} </p>   
 <p> ---------------------------------------------------------------</p>
+
+{% endif %}
+   
 
 {% endfor %}
    
