@@ -53,6 +53,6 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     # apps
     path("accounts/", include("accounts.urls")),
-    path("blog/", include("blog.urls")),
+    path("", include("blog.urls")),
     path("comment/", include("comment.urls")),
 ]
