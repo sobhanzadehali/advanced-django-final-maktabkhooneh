@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Compose up ...
-      run: docker-compose -f docker-compose-stage.yml up -d
+      run: docker compose -f "docker-compose-stage.yml" up -d --build 
     - name: run tests
       run: docker-compose exec backend sh -c "pytest ."
 
