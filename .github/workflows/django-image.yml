@@ -17,7 +17,7 @@ jobs:
     - name: Compose up ...
       run: docker compose -f "docker-compose-stage.yml" up -d --build 
     - name: run tests
-      run: docker-compose exec backend sh -c "pytest ."
+      run: docker compose exec backend sh -c "pytest ."
 
   Deploy:
     if: ${{ always() && contains(join(needs.*.result, ','), 'success') }} 
